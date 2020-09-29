@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Todo } from "../modules/todo";
+import {removeTodo, Todo} from "../modules/todo";
 import useTodo from "../hooks/useTodo";
 
 interface TodoItemProps {
@@ -43,21 +43,77 @@ const TodoItemRemove = styled.i`
   cursor:pointer;
   display: none;
   z-index: 999;
+`;
+
+const TodoItemEdit = styled.i`
+  position:absolute;
+  right: 30px;
+  cursor:pointer;
+  display: none;
+  z-index: 999;
+`
+
+const TodoItemInput = styled.input`
+  line-height: 30px;
+  width: 80%;
+  background: #f5f5f5;
+  outline: 0;
+  border: 1px solid #666;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 18px;
 `
 
 const TodoItem: React.FC<TodoItemProps> = ({last, item}) => {
-    const { onRemoveTodo } = useTodo();
+    const { onRemoveTodo, onEditTodo } = useTodo();
     const [checked, setChecked] = useState(item.state);
+    const [isEdit, setIsEdit] = useState(false);
+    const [editText, setEditText] = useState(item.text);
 
     const onClickItem = () => {
         setChecked(!checked);
     };
 
+    const onClickDelete = (idx: number) => {
+        if (isEdit) {
+            setIsEdit(false);
+            setEditText(item.text);
+            return;
+        }
+        onRemoveTodo(idx);
+    };
+
+    const onClickEdit = (idx: number) => {
+        if (isEdit) {
+            if (editText.replace(/\s/g, "").length <= 0) {
+                return;
+            }
+            let payload = {
+                text: editText,
+                idx: idx
+            };
+            onEditTodo(payload);
+            setIsEdit(false);
+            return;
+        }
+        setIsEdit(true);
+    };
+
+    const onChangeEditText = (e) => {
+        setEditText(e.target.value);
+    }
+
     return (
         <TodoItemWrapper last={last}>
             <TodoItemCheck checked={checked} type="checkbox" onChange={onClickItem} />
-            <TodoItemText>{item.text}</TodoItemText>
-            <TodoItemRemove className="xi-trash" onClick={() => onRemoveTodo(item.idx)} />
+            {(() => {
+                if (isEdit) {
+                    return <TodoItemInput value={editText} onChange={onChangeEditText} />;
+                }
+                return <TodoItemText>{item.text}</TodoItemText>;
+            })()}
+            <TodoItemRemove className="xi-trash" onClick={() => onClickDelete(item.idx)} />
+            <TodoItemEdit className="xi-pen" onClick={() => onClickEdit(item.idx)} />
         </TodoItemWrapper>
     );
 };

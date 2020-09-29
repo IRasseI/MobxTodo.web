@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import useTodo from "../hooks/useTodo";
-import {RootState} from "../modules";
 import styled from 'styled-components'
 import TodoItem from "./TodoItem";
 
@@ -70,7 +69,7 @@ const AddTodoInput = styled.input`
   font-size: 18px;
 `
 
-const Todo: React.FC<RootState> = () => {
+const Todo: React.FC = () => {
     const {todo, onAddTodo} = useTodo();
     const [add, setAdd] = useState(false);
     const [payload, setPayload] = useState({
@@ -110,8 +109,8 @@ const Todo: React.FC<RootState> = () => {
             </div>
             <AddTodo onClick={addTodoToggle}><i className="xi-plus"/>ADD ITEM</AddTodo>
             <AddTodoWrapper isShow={add}>
-                <AddTodoCheckbox onChange={onChangeTodoCheckbox} value={payload.checked} type="checkbox" />
-                <AddTodoInput onChange={onChangeTodoInput} checked={payload.text} type="text" />
+                <AddTodoCheckbox onChange={onChangeTodoCheckbox} checked={payload.checked} type="checkbox" />
+                <AddTodoInput onChange={onChangeTodoInput} value={payload.text} type="text" />
             </AddTodoWrapper>
         </TodoWrapper>
     )
