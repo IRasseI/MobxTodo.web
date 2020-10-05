@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {removeTodo, Todo} from "../modules/todo";
+import {Todo} from "../modules/todo";
 import useTodo from "../hooks/useTodo";
 
 interface TodoItemProps {

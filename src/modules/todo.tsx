@@ -14,7 +14,7 @@ const initialState: Array<Todo> = [
     {idx: 3, text: "3번", state: true},
 ];
 
-export const addTodo = (payload: {text: string, checked: boolean}) => ({
+export const addTodo = (payload: { text: string, checked: boolean }) => ({
     type: ADD_TODO,
     payload
 });
@@ -32,21 +32,21 @@ export const removeTodo = (idx: number) => ({
 type TodoAction =
     | ReturnType<typeof addTodo>
     | ReturnType<typeof editTodo>
-    | ReturnType<typeof removeTodo>
+    | ReturnType<typeof removeTodo>;
 
 export default (state: Array<Todo> = initialState, action: TodoAction): Array<Todo> => {
     switch (action.type) {
         case ADD_TODO:
             const nextIdx = Math.max(...state.map(v => v.idx)) + 1;
-            return state.concat({idx: nextIdx, text: action.payload.text, state: action.payload.checked})
+            return state.concat({idx: nextIdx, text: action.payload.text, state: action.payload.checked});
 
         case EDIT_TODO:
-            let findIdx = state.findIndex(v => v.idx === action.payload.idx)
+            let findIdx = state.findIndex(v => v.idx === action.payload.idx);
             state[findIdx].text = action.payload.text;
             return state;
 
         case REMOVE_TODO:
-            return state.filter(v => v.idx !== action.payload)
+            return state.filter(v => v.idx !== action.payload);
 
         default:
             return state;
