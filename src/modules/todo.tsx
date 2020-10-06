@@ -8,11 +8,7 @@ export interface Todo {
     state: boolean;
 }
 
-const initialState: Array<Todo> = [
-    {idx: 1, text: "1번", state: true},
-    {idx: 2, text: "2번", state: false},
-    {idx: 3, text: "3번", state: true},
-];
+const initialState: Array<Todo> = [];
 
 export const addTodo = (payload: { text: string, checked: boolean }) => ({
     type: ADD_TODO,
