@@ -3,7 +3,6 @@ import useCounter from "../hooks/useCounter";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import API from '../util/api';
-import axios from 'axios';
 
 const GoTodoList = styled(Link)`
   font-size: 30px;

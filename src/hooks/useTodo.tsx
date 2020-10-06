@@ -10,7 +10,9 @@ export default () => {
     const onAddTodo = useCallback(
         (payload: {text: string, checked: boolean}) => dispatch(addTodo(payload)), [dispatch]
     );
-    const onRemoveTodo = useCallback((idx: number) => dispatch(removeTodo(idx)), [dispatch]);
+    const onRemoveTodo = useCallback(
+        (idx: number) => dispatch(removeTodo(idx)), [dispatch]
+    );
     const onEditTodo = useCallback(
         (payload: {idx: number, text: string}) => dispatch(editTodo(payload)), [dispatch]
     );
